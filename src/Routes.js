@@ -4,17 +4,17 @@ import PostList from './PostList';
 import PostForm from './PostForm';
 import PostDetails from './PostDetails';
 
-function Routes() {
+function Routes({posts, addNewPost, deletePost, editPost}) {
   return (
     <Switch>
       <Route exact path='/'>
-        <PostList />
+        <PostList posts={posts}/>
       </Route>
       <Route exact path='/new'>
-        <PostForm />
+        <PostForm posts={posts} addNewPost={addNewPost} />
       </Route>
       <Route exact path='/:postId'>
-        <PostDetails />
+        <PostDetails posts={posts} deletePost={deletePost} editPost={editPost}/>
       </Route>
       <Redirect to='/' />
     </Switch>
