@@ -5,25 +5,20 @@ import Navigation from './Navigation';
 import { BrowserRouter } from 'react-router-dom';
 
 function App() {
-  const INITIAL_STATE = [
-    {
-      title: 'Post 1',
-      description: 'Description for Post 1',
-      body: 'This is body 1',
-      id: '1',
-      comments: [
-        { contents: 'Nice blog!', id: 1 },
-        { contents: 'I like your thinking.', id: 2 },
-      ],
-    },
-    {
-      title: 'Post 2',
-      description: 'Description for Post 2',
-      body: 'This is body 2',
-      id: '2',
-      comments: [{ contents: 'Have a nice day!', id: 3 }],
-    },
-  ];
+  // const INITIAL_STATE = {
+  //   '1': {
+  //     title: 'Post 1',
+  //     description: 'Description for Post 1',
+  //     body: 'This is body 1',
+  //     comments: { '1': 'Nice blog!', '2': 'I like your thinking.' }
+  //   },
+  //   '2': {
+  //     title: 'Post 2',
+  //     description: 'Description for Post 2',
+  //     body: 'This is body 2',
+  //     comments: { '3': 'Have a nice day!' }
+  //   }
+  // }
   const [posts, setPosts] = useState(INITIAL_STATE);
 
   /* 
