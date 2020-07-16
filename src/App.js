@@ -26,25 +26,40 @@ function App() {
   ];
   const [posts, setPosts] = useState(INITIAL_STATE);
 
+  /* 
+  Rules for not mutating old state:
+  1. If the new state depends on the old state, use an arrow function in setState
+  2. let postCopy = { ...post }; // right for make a copy of obj
+     let commentsCopy = [...comments]; // right
+     let postCopy =post;  // wrong
+     let commentsCopy = comments; // wrong
+  3. Make a copy of object and array before mutating
+  */
+
   const addNewPost = (newPost) => {
     setPosts((currData) => [...currData, newPost]);
   };
 
   const editPost = (postToUpdate) => {
-    setPosts(
-      posts.map((post) => (post.id === postToUpdate.id ? postToUpdate : post))
+    setPosts((currData) =>
+      currData.map((post) =>
+        post.id === postToUpdate.id ? postToUpdate : post
+      )
     );
   };
 
   const deletePost = (id) => {
-    setPosts(posts.filter((post) => post.id !== id));
+    setPosts((currData) => currData.filter((post) => post.id !== id));
   };
 
   const addComment = (commentObj, postId) => {
-    setPosts(
-      posts.map((post) => {
+    setPosts((currData) =>
+      currData.map((post) => {
+        // important: do not mutate the post object
         if (post.id === postId) {
-          post.comments = [...post.comments, commentObj];
+          let postCopy = { ...post };
+          postCopy.comments = [...post.comments, commentObj];
+          return postCopy;
         }
         return post;
       })
@@ -52,15 +67,24 @@ function App() {
   };
 
   const deleteComment = (commentId, postId) => {
-    setPosts(
-      posts.map((post) => {
+    setPosts((currData) =>
+      currData.map((post) => {
+        // make a copy of the post & comment
+        // splice comment copy
         if (post.id === postId) {
-          const indexToDelete = post.comments.findIndex(
+          const postCopy = { ...post };
+          const commentsCopy = [...post.comments];
+
+          const indexToDelete = commentsCopy.findIndex(
             (comment) => comment.id === commentId
           );
           // const commentsCopy = [...post.comments];
           // Not sure about this
-          post.comments.splice(indexToDelete, 1);
+          // this is not good
+          // postCopy.comments.splice(indexToDelete, 1);
+          commentsCopy.splice(indexToDelete, 1);
+          postCopy.comments = commentsCopy;
+          return postCopy;
         }
         return post;
       })

@@ -18,7 +18,7 @@ function Routes({
         <PostList posts={posts} />
       </Route>
       <Route exact path='/new'>
-        <PostForm posts={posts} addNewPost={addNewPost} />
+        <PostForm addNewPost={addNewPost} />
       </Route>
       <Route exact path='/:postId'>
         <PostDetails

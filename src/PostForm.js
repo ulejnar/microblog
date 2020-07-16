@@ -3,7 +3,17 @@ import { useHistory } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
 function PostForm({ post, addNewPost, editPost }) {
-  const INITIAL_STATE = { title: '', description: '', body: '', comments: [] };
+  let title = post ? post.title : '';
+  let description = post ? post.description : '';
+  let body = post ? post.body : '';
+  let comments = post ? post.comments : '';
+
+  const INITIAL_STATE = {
+    title,
+    description,
+    body,
+    comments,
+  };
   const [formData, setFormData] = useState(INITIAL_STATE);
   const history = useHistory();
 
@@ -27,7 +37,7 @@ function PostForm({ post, addNewPost, editPost }) {
       <label htmlFor='title'> Title </label>
       <input
         name='title'
-        value={post ? post.title : formData.title}
+        value={formData.title}
         id='title'
         placeholder={post && post.title}
         onChange={handleChange}
@@ -35,7 +45,7 @@ function PostForm({ post, addNewPost, editPost }) {
       <label htmlFor='description'> Description </label>
       <input
         name='description'
-        value={post ? post.description : formData.description}
+        value={formData.description}
         id='description'
         placeholder={post && post.description}
         onChange={handleChange}
@@ -43,7 +53,7 @@ function PostForm({ post, addNewPost, editPost }) {
       <label htmlFor='body'> Body </label>
       <input
         name='body'
-        value={post ? post.body : formData.body}
+        value={formData.body}
         id='body'
         placeholder={post && post.body}
         onChange={handleChange}
