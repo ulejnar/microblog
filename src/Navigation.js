@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import './Navigation.css';
 
 function Navigation() {
+  console.log('Rendering Navigation....');
   return (
     <nav>
       <h1>Microblog</h1>

@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Post from './Post';
 
-function PostList({posts}) {
- 
+function PostList({ posts }) {
   return (
     <div>
       {posts.map((post) => (
