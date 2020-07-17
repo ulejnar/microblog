@@ -22,9 +22,7 @@ const rootReducer = (state = INITIAL_STATE, action) => {
       return { ...state, ...action.payload };
 
     case t.EDIT_POST:
-      const key = Object.keys(action.payload)[0];
-      const value = Object.values(action.payload)[0];
-      return { ...state, [key]: value };
+      return { ...state, ...action.payload };
 
     case t.DELETE_POST:
       copiedState = { ...state };

@@ -31,8 +31,8 @@ function PostForm({ postObj }) {
     const id = uuidv4();
 
     post
-      ? dispatch(editPost({ [postId]: formData }))
-      : dispatch(addNewPost({ [id]: formData }));
+      ? dispatch(editPost({ [postId]: {...formData} }))
+      : dispatch(addNewPost({ [id]: {...formData} }));
     history.push('/');
   };
 
