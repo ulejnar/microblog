@@ -2,32 +2,33 @@ import React, { useState } from 'react';
 import { useParams, useHistory, Redirect } from 'react-router-dom';
 import PostForm from './PostForm';
 import CommentList from './CommentList';
+import { useSelector, useDispatch } from 'react-redux';
+import { deletePost } from './actions';
 
-function PostDetails({
-  posts,
-  deletePost,
-  editPost,
-  addComment,
-  deleteComment,
-}) {
+function PostDetails() {
   const [editMode, setEditMode] = useState(false);
 
   const { postId } = useParams();
-  const post = posts.find((p) => p.id === postId);
-
   const history = useHistory();
 
-  // protect
-  if (!post) {
+  const posts = useSelector((store) => store);
+  const dispatch = useDispatch();
+
+  // protect /999 if 999 doesn't exact
+  if (!(postId in posts)) {
     return <Redirect to='/' />;
   }
+
   const handleRemove = () => {
-    deletePost(post.id);
+    dispatch(deletePost(postId));
     history.push('/');
   };
 
-  console.log('RENDERING PostDetails.....');
-  const { title, description, body, comments } = post;
+  const postObj = { [postId]: posts[postId] };
+
+  const { title, description, body, comments } =
+    postObj && Object.values(postObj)[0];
+
   return (
     <div>
       <h3> {title}</h3>
@@ -35,13 +36,8 @@ function PostDetails({
       <button onClick={handleRemove}>Remove</button>
       <p> {description}</p>
       <p>{body}</p>
-      {editMode && <PostForm post={post} editPost={editPost} />}
-      <CommentList
-        comments={comments}
-        addComment={addComment}
-        deleteComment={deleteComment}
-        postId={postId}
-      />
+      {editMode && <PostForm postObj={postObj} />}
+      <CommentList comments={comments} postId={postId} />
     </div>
   );
 }

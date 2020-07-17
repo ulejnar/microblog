@@ -1,26 +1,28 @@
 import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { addComment } from './actions';
+import { useDispatch } from 'react-redux';
 
-function CommentForm({ addComment, postId }) {
-  const INITIAL_STATE = { contents: '', id: '' };
+function CommentForm({ postId }) {
+  const INITIAL_STATE = '';
   const [formData, setFormData] = useState(INITIAL_STATE);
+  const dispatch = useDispatch();
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    addComment({ ...formData, id: uuidv4() }, postId);
+    const commentId = uuidv4();
+    dispatch(addComment({ [commentId]: formData }, postId));
     setFormData(INITIAL_STATE);
   }
 
   function handleChange(evt) {
-    const { name, value } = evt.target;
-    setFormData({ [name]: value });
+    setFormData(evt.target.value);
   }
 
   return (
     <form onSubmit={handleSubmit}>
       <input
-        name='contents'
-        value={formData.contents}
+        value={formData}
         placeholder='New Comment'
         onChange={handleChange}
       />

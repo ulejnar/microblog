@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
+import { useDispatch } from 'react-redux';
+import { addNewPost, editPost } from './actions';
 
-function PostForm({ post, addNewPost, editPost }) {
-  let title = post ? post.title : '';
-  let description = post ? post.description : '';
-  let body = post ? post.body : '';
-  let comments = post ? post.comments : '';
+function PostForm({ postObj }) {
+  const postId = postObj && Object.keys(postObj)[0];
+
+  const post = postObj && Object.values(postObj)[0];
+
+  let title = postObj ? post.title : '';
+  let description = postObj ? post.description : '';
+  let body = postObj ? post.body : '';
+  let comments = postObj ? post.comments : {};
 
   const INITIAL_STATE = {
     title,
@@ -14,15 +20,19 @@ function PostForm({ post, addNewPost, editPost }) {
     body,
     comments,
   };
+
   const [formData, setFormData] = useState(INITIAL_STATE);
   const history = useHistory();
+
+  const dispatch = useDispatch();
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
     const id = uuidv4();
+
     post
-      ? editPost({ ...formData, id: post.id })
-      : addNewPost({ ...formData, id });
+      ? dispatch(editPost({ [postId]: formData }))
+      : dispatch(addNewPost({ [id]: formData }));
     history.push('/');
   };
 
