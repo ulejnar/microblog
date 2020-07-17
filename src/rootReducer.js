@@ -1,30 +1,22 @@
 import * as t from './actionTypes';
 
 const INITIAL_STATE = {
-  '1': {
-    title: 'Post 1',
-    description: 'Description for Post 1',
-    body: 'This is body 1',
-    comments: { '1': 'Nice blog!', '2': 'I like your thinking.' },
-  },
-  '2': {
-    title: 'Post 2',
-    description: 'Description for Post 2',
-    body: 'This is body 2',
-    comments: { '3': 'Have a nice day!' },
-  },
+  posts: [],
+  postDetail: {},
 };
 
 const rootReducer = (state = INITIAL_STATE, action) => {
   let copiedState, copiedPostValue, copiedComments, postId;
   switch (action.type) {
+    case t.GET_POSTS:
+      return { ...state, posts: action.posts };
+    case t.GET_POST_DETAIL:
+      return { ...state, postDetail: action.postDetail };
     case t.ADD_NEW_POST:
-      return { ...state, ...action.payload };
+      return { ...state, ...action.postData };
 
     case t.EDIT_POST:
-      const key = Object.keys(action.payload)[0];
-      const value = Object.values(action.payload)[0];
-      return { ...state, [key]: value };
+      return { ...state, ...action.payload };
 
     case t.DELETE_POST:
       copiedState = { ...state };

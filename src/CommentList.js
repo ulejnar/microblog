@@ -4,25 +4,15 @@ import { deleteComment } from './actions';
 import { useDispatch } from 'react-redux';
 
 function CommentList({ comments, postId }) {
-  const commentArr = [];
-  const dispatch = useDispatch();
-
-  // code review question: Why is it OK to mix JSX outside
-  // of return?
-  for (let id in comments) {
-    commentArr.push(
-      <div key={id}>
-        {/* <button onClick={}>X</button> */}
-        <button onClick={() => dispatch(deleteComment(id, postId))}>X</button>
-        <span>{comments[id]}</span>
-      </div>
-    );
-  }
-
-  // console.log('Rendering CommentList....');
   return (
     <div>
-      {commentArr}
+      {comments.map((comment) => (
+        <div key={comment.id}>
+          {/* <button onClick={}>X</button> */}
+          <button>X</button>
+          <span>{comment.text}</span>
+        </div>
+      ))}
       <CommentForm postId={postId} />
     </div>
   );

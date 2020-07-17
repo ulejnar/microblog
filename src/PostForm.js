@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { useDispatch } from 'react-redux';
-import { addNewPost, editPost } from './actions';
+// import { addNewPost, editPost } from './actions';
+import { addNewPostAPI } from './actionCreators';
 
 function PostForm({ postObj }) {
   const postId = postObj && Object.keys(postObj)[0];
@@ -28,11 +29,11 @@ function PostForm({ postObj }) {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    const id = uuidv4();
 
-    post
-      ? dispatch(editPost({ [postId]: formData }))
-      : dispatch(addNewPost({ [id]: formData }));
+    // post
+    //   ? dispatch(editPost({ [postId]: { ...formData } }))
+    //   : dispatch(addNewPost({ [uuidv4()]: { ...formData } }));
+    dispatch(addNewPostAPI({ ...formData }));
     history.push('/');
   };
 

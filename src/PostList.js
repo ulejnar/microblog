@@ -1,19 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Post from './Post';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { getPostsFromAPI } from './actionCreators';
 
 function PostList() {
-  const posts = useSelector((store) => store);
+  const posts = useSelector((store) => store.posts);
+  const dispatch = useDispatch();
 
-  const postArr = [];
-  for (let id in posts) {
-    const { title, description } = posts[id];
-    postArr.push(
-      <Post key={id} id={id} title={title} description={description} />
-    );
-  }
+  useEffect(() => {
+    dispatch(getPostsFromAPI());
+  }, [dispatch]);
 
-  return <div>{postArr}</div>;
+  return (
+    <div>
+      {posts.map((post) => (
+        <Post
+          key={post.id}
+          id={post.id}
+          title={post.title}
+          description={post.description}
+        />
+      ))}
+    </div>
+  );
 }
 
 export default PostList;
