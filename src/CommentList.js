@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 function CommentList({ comments, postId }) {
   return (
     <div>
+      <b>Comments:</b>
       {comments.map((comment) => (
         <div key={comment.id}>
           {/* <button onClick={}>X</button> */}
