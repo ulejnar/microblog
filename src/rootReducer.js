@@ -13,24 +13,28 @@ const rootReducer = (state = INITIAL_STATE, action) => {
     case t.GET_POST_DETAIL:
       return { ...state, postDetail: action.postDetail };
     case t.ADD_NEW_POST:
-      return { ...state, ...action.postData };
+      return { ...state, posts: [...state.posts, action.postData]};
+
+    case t.DELETE_POST:
+      return {...state, posts: [...state.posts]};
 
     case t.EDIT_POST:
       return { ...state, ...action.payload };
 
-    case t.DELETE_POST:
-      copiedState = { ...state };
-      delete copiedState[action.payload];
-      return copiedState;
+    // case t.DELETE_POST:
+    //   copiedState = { ...state };
+    //   delete copiedState[action.payload];
+    //   return copiedState;
 
     case t.ADD_COMMENT:
-      copiedState = { ...state };
-      postId = action.payload.postId;
-      copiedPostValue = { ...copiedState[postId] };
-      copiedComments = { ...copiedPostValue.comments };
-      copiedPostValue.comments = {
-        ...copiedComments,
-        ...action.payload.comment,
+      
+      // copiedState = { ...state };
+      // postId = action.payload.postId;
+      // copiedPostValue = { ...copiedState[postId] };
+      // copiedComments = { ...copiedPostValue.comments };
+      // copiedPostValue.comments = {
+      //   ...copiedComments,
+      //   ...action.payload.comment,
       };
       return { ...state, [action.payload.postId]: copiedPostValue };
 

@@ -4,7 +4,7 @@ import PostForm from './PostForm';
 import CommentList from './CommentList';
 import { useSelector, useDispatch } from 'react-redux';
 import { deletePost } from './actions';
-import { getPostFromAPIById } from './actionCreators';
+import { getPostFromAPIById, removePostAPI } from './actionCreators';
 
 function PostDetails() {
   const [editMode, setEditMode] = useState(false);
@@ -18,6 +18,11 @@ function PostDetails() {
     dispatch(getPostFromAPIById(postId));
   }, [dispatch]);
 
+
+  
+    
+
+
   // protect /999 if 999 doesn't exact
   // to do
   // Without this no error - WHY?
@@ -26,8 +31,8 @@ function PostDetails() {
   }
 
   const handleRemove = () => {
-    dispatch(deletePost(postId));
-    history.push('/');
+    dispatch(removePostAPI(postId))
+    history.push("/");
   };
 
   const { title, description, body, comments } = postDetail;
